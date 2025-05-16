@@ -23,8 +23,8 @@ while True:
     resultado = maos.process(imagem_rgb)
 
     if resultado.multi_hand_landmarks and resultado.multi_handedness:
-        y_base = 60  # Posição inicial do texto
-        y_step = 40  # Espaçamento entre as linhas
+        y_base = 60  
+        y_step = 40  
         for idx, mao in enumerate(resultado.multi_hand_landmarks):
 
             tipo_mao = resultado.multi_handedness[idx].classification[0].label
