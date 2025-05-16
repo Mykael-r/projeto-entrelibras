@@ -23,6 +23,8 @@ while True:
     resultado = maos.process(imagem_rgb)
 
     if resultado.multi_hand_landmarks and resultado.multi_handedness:
+        y_base = 60  # Posição inicial do texto
+        y_step = 40  # Espaçamento entre as linhas
         for idx, mao in enumerate(resultado.multi_hand_landmarks):
 
             tipo_mao = resultado.multi_handedness[idx].classification[0].label
@@ -63,7 +65,7 @@ while True:
 
                 # Exibe a contagem de dedos levantados
                 texto = f"{tipo_mao}: {dedos_levantados} dedo(s) levantado(s)"
-                cv2.putText(frame, texto, (10, 60 + 30 * idx), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+                cv2.putText(frame, texto, (10, y_base + y_step * idx * 2), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
 
                 # Identifica gestos simples
                 if dedos_levantados == 5:
@@ -76,7 +78,9 @@ while True:
                     gesto = f"{dedos_levantados} dedos"
 
                 # Exibe o gesto reconhecido
-                cv2.putText(frame, gesto, (10, 90 + 30 * idx), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+                cv2.putText(frame, gesto, (10, y_base + y_step * (idx * 2 + 1)), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+
+    frame = cv2.resize(frame, (1280, 720))
 
     cv2.imshow("Detecção de Mãos - Libras IA", frame)
 
