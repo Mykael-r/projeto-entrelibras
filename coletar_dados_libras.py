@@ -36,8 +36,10 @@ while True:
 
             pontos = []
             for lm in mao.landmark:
-                pontos.extend([lm.x, lm.y])  # Salva apenas X e Y
+                cx_base, cy_base = mao.landmark[0].x, mao.landmark[0].y
 
+            for lm in mao.landmark:
+                pontos.extend([lm.x - cx_base, lm.y - cy_base])
             if letra_atual and len(pontos) == 42:
                 with open(arquivo_csv, mode='a', newline='') as f:
                     writer = csv.writer(f)
